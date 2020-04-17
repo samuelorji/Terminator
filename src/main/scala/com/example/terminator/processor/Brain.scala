@@ -36,7 +36,7 @@ object Brain {
 
 
     val helloActor = context.spawn(HelloCommandActor(),"HelloActor")
-    val weatherActor = context.spawn(WeatherCommandActor(),"weather")
+    val weatherActor = context.spawn(WeatherCommandActor.actor(),"weather")
     val googleActor = context.spawn(GoogleCommandActor(),"google")
     val todoActor = context.spawn(TodoListActor(),"todoActor")
 

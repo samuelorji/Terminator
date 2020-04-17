@@ -65,7 +65,7 @@ object GoogleCommandActor extends CommandWorker with CommandProcessAnalytics {
                   }
               }
 
-            case _ =>  worker ! BrainMinion.CommandNotHandled(s"cannot understand command $cmd")
+            case _ =>  worker ! BrainMinion.CommandNotHandled(s"cannot understand command '$cmd'")
 
 
           }

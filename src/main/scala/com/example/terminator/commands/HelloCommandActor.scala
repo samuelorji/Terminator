@@ -35,15 +35,16 @@ object HelloCommandActor extends CommandWorker with CommandProcessAnalytics {
   }
 
 
-  private def getRandomHelloPhrase: String = {
-    val phrases = List(
+  private [commands] val responsePhrases =
+    List(
       "Good day",
       "Hello!",
       "How are you?",
       "Buenos dias",
       "It's a good day to be alive.",
       "Yo")
-    Utils.getRandomElement(phrases)
+  private def getRandomHelloPhrase: String = {
+    Utils.getRandomElement(responsePhrases)
   }
 
 }

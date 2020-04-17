@@ -23,7 +23,7 @@ object Input {
 
     Behaviors.receiveMessage[AppMessages]{
       case UserInput(input) =>
-        brain ! Brain.ProcessCommand(input)
+        brain ! Brain.ProcessCommand(input.toLowerCase)
         Behaviors.same
       case Next =>
         ctx.self ! UserInput(getInput)
