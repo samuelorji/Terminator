@@ -29,10 +29,7 @@ object OpenApplicationActor extends CommandWorker with CommandProcessAnalytics {
           command.trim.split(" ")match {
             case Array("open", app) =>
               val os = System.getProperty("os.name").toLowerCase
-              if (os.contains("window")){
-
-              }
-              else if(os.contains("linux")){
+              if(os.contains("linux")){
                 // get all paths in a list
                 val error = Array.ofDim[Byte](2*1024) //2MB
                 val success = Array.ofDim[Byte](1*1024) //256KB
@@ -48,7 +45,7 @@ object OpenApplicationActor extends CommandWorker with CommandProcessAnalytics {
                       case Nil =>
                         worker ! BrainMinion.CommandNotHandled(s"Can't find ${app}")
                       case h :: t =>
-                        val searchResult = Runtime.getRuntime.exec(Array("/bin/bash", "-c", s"echo `ls -la $h | grep -i $app` | cut -d' ' -f10"))
+                        val searchResult = Runtime.getRuntime.exec(Array("/bin/bash", "-c", s"echo `ls -la $h | grep -i $app` | cut -d' ' -f9"))
                         val successRead = searchResult.getInputStream.read(success)
                         if(successRead > 1){
                           //we found the app

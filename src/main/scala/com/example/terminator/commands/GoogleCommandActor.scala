@@ -40,16 +40,18 @@ object GoogleCommandActor extends CommandWorker with CommandProcessAnalytics {
               val baseUrl = "https://www.google.com/search?q="
               val encodedQuery = URLEncoder.encode(rest.mkString(" "), StandardCharsets.UTF_8.toString)
               val completeQuery = s"$baseUrl$encodedQuery"
-              val isWindows = System.getProperty("os.name")
-                .toLowerCase().startsWith("windows")
+              val os = System.getProperty("os.name")
+                .toLowerCase()
               val errorMsg = Array.ofDim[Byte](1 * 1024) //1MB
 
               Try {
-                if (isWindows) {
-                  new ProcessBuilder("start", "-chrome", "--new-window", s"$completeQuery").start()
-                } else {
+                if (os.contains("linux")) {
+                  new ProcessBuilder("/usr/bin/google-chrome","--new-window", s"$completeQuery").start()
+                } else if(os.contains("mac")) {
                   new ProcessBuilder("open", "-na", s"Google Chrome", "--args", "--new-window", s"$completeQuery").start()
-
+                }
+                else{
+                  throw new Exception("We do not support windows yet ): ")
                 }
               }.toEither match {
                 case Left(err) =>
