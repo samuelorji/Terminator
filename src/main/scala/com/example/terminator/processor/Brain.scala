@@ -5,7 +5,7 @@ import akka.actor.typed.{ActorRef, Behavior, Terminated}
 import akka.pattern.BackoffSupervisor
 import com.example.terminator.Input
 import com.example.terminator.Input.AppMessages
-import com.example.terminator.commands.{GoogleCommandActor, HelloCommandActor, TodoListActor, WeatherCommandActor}
+import com.example.terminator.commands.{GoogleCommandActor, HelloCommandActor, OpenApplicationActor, TodoListActor, WeatherCommandActor}
 import com.example.terminator.output.MouthActor
 import com.example.terminator.output.MouthActor.{MouthMessages, Show}
 import commands.CommandWorker
@@ -24,7 +24,7 @@ object Brain {
   case object Done extends BrainMessage
   case object Quit extends BrainMessage
 
-  val workers = List(HelloCommandActor,GoogleCommandActor,WeatherCommandActor,TodoListActor)
+  val workers = List(HelloCommandActor,GoogleCommandActor,WeatherCommandActor,TodoListActor,OpenApplicationActor)
 
   private def formatCommand(worker : CommandWorker) : String = {
     s"${worker.commandTitle}:\n\t${worker.commands.mkString("\n\t")}"
@@ -39,12 +39,14 @@ object Brain {
     val weatherActor = context.spawn(WeatherCommandActor.actor(),"weather")
     val googleActor = context.spawn(GoogleCommandActor(),"google")
     val todoActor = context.spawn(TodoListActor(),"todoActor")
+    val openAppActor = context.spawn(OpenApplicationActor(),"openApplicationActor")
 
   val regexToActorMap = {
     HelloCommandActor.commandRegexes.map(_ -> helloActor) ++
       WeatherCommandActor.commandRegexes.map(_ -> weatherActor) ++
       TodoListActor.commandRegexes.map(_ ->  todoActor) ++
-      GoogleCommandActor.commandRegexes.map(_ -> googleActor)
+      GoogleCommandActor.commandRegexes.map(_ -> googleActor) ++
+    OpenApplicationActor.commandRegexes.map(_ -> openAppActor)
     }.toMap
 
     val worker = context.spawn(BrainMinion(context.self,regexToActorMap),"Worker")

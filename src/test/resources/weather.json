@@ -1,0 +1,43 @@
+{
+  "coord": {
+    "lon": 12.57,
+    "lat": 55.68
+  },
+  "weather": [
+    {
+      "id": 802,
+      "main": "Clouds",
+      "description": "scattered clouds",
+      "icon": "03d"
+    }
+  ],
+  "base": "stations",
+  "main": {
+    "temp": 285.04,
+    "feels_like": 281.54,
+    "temp_min": 283.15,
+    "temp_max": 287.04,
+    "pressure": 1020,
+    "humidity": 43
+  },
+  "visibility": 10000,
+  "wind": {
+    "speed": 2.1,
+    "deg": 360
+  },
+  "clouds": {
+    "all": 42
+  },
+  "dt": 1587123337,
+  "sys": {
+    "type": 1,
+    "id": 1575,
+    "country": "DK",
+    "sunrise": 1587095936,
+    "sunset": 1587147544
+  },
+  "timezone": 7200,
+  "id": 6949461,
+  "name": "Inner City",
+  "cod": 200
+}

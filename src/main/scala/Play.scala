@@ -3,7 +3,7 @@ import akka.actor.typed.scaladsl.Behaviors
 import akka.actor.typed.{ActorSystem, Behavior, PostStop, Terminated}
 import play.api.libs.json._
 
-object Play {
+object Play extends App {
 
 
   val json = "{\"coord\":{\"lon\":12.57,\"lat\":55.68},\"weather\":[{\"id\":804,\"main\":\"Clouds\",\"description\":\"overcast clouds\",\"icon\":\"04n\"}],\"base\":\"stations\",\"main\":{\"temp\":279.96,\"feels_like\":274.16,\"temp_min\":279.15,\"temp_max\":281.15,\"pressure\":1017,\"humidity\":78},\"visibility\":10000,\"wind\":{\"speed\":6.2,\"deg\":270},\"clouds\":{\"all\":100},\"dt\":1586895281,\"sys\":{\"type\":1,\"id\":1575,\"country\":\"DK\",\"sunrise\":1586837182,\"sunset\":1586887981},\"timezone\":7200,\"id\":6949461,\"name\":\"Inner City\",\"cod\":200}"
@@ -20,9 +20,57 @@ object Play {
     "weather <latitude> <longitude>"
   )
 
-  val master = ActorSystem(MasterControlProgram(),"master")
+//  val master = ActorSystem(MasterControlProgram(),"master")
+//
+//  master ! SpawnJob("Hello")
 
-  master ! SpawnJob("Hello")
+  val errorMsg = Array.ofDim[Byte](2*1024) //1MB
+  val sucMsg = Array.ofDim[Byte](512) //3MB
+  val command = List(
+   "ls", "-la", "/Applications", " | " , "grep", "-i", "spotify"
+  )
+
+ val st =  "ls"// -la /Applications"// | grep -i spotify"
+
+
+  //val exec =  Runtime.getRuntime.exec(Array("/bin/bash", "-c", "echo `ls -la /usr/local/bin | grep -i sobt` | cut -d' ' -f10"))
+
+ val exec =  Runtime.getRuntime.exec(Array("/bin/bash", "-c", "echo $PATH"))
+
+ // val builder  = new ProcessBuilder(command : _*).start()
+
+  val sucRead = exec.getInputStream.read(sucMsg)
+  val failRead = exec.getErrorStream.read(errorMsg)
+
+
+  println(s"success read $sucRead")
+  println(s"failure read $failRead")
+
+  val path = new String(sucMsg.take(sucRead))
+
+  println(path)
+
+  //val pathList = path.trim.split(":").toList
+
+//  println(pathList.map(_.trim))
+//
+//  println(List(1,2,3,4))
+//
+//  val exec2 = Runtime.getRuntime.exec(Array("/bin/bash", "-c", s"open /Applications/${appName}"))
+//  println(s"success array before 2nd command is ${new String(sucMsg)}")
+//  val read2  = Runtime.getRuntime.exec(Array("/bin/bash", "-c", "echo `ls -la /Applications | grep -i slack`")).getInputStream.read(sucMsg)
+//
+//
+//  println(s"success read $sucRead")
+//  println(s"failure read $failRead")
+//
+//  println(new String(sucMsg.take(read2)))
+
+
+
+
+  //println(new String(errorMsg.take(failRead)))
+
 
 
 
