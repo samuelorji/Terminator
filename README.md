@@ -1,7 +1,7 @@
 # Terminator 
 
 This project is hugely based off the awesome Alvin Alexander's project [AkkazonEkko](https://github.com/alvinj/AkkazonEkko), 
-but this project was built using [Akka-Typed](https://doc.akka.io/docs/akka/current/typed/index.html) and I took some of his suggestions by avoiding using Future.Await 
+but this project was built using [Akka-Typed](https://doc.akka.io/docs/akka/current/typed/index.html) and I took some of his suggestions by avoiding using Future.Await amongst others :) 
 
 It's a CLI app that can respond to the some commands and perform some operations using Typed Actors
 
@@ -22,7 +22,7 @@ but here is a summary
 | *google*  | [search query]      |   opens your search query in a new *chrome* tab |
 | *open*    | [application name]      |    opens the application specified or an app that contains that name | 
 | *weather*  | no args / [lat lon]  | Fetches weather details for geographic coordinates supplied or defaults to Copenhagen |
-| *todo*    | [add] / [rm] / [list] / [clear]|    opens the application specified or an app that contains that name | 
+| *todo*    | [add] / [rm] / [list] / [clear]|    adds, deletes, lists and also clears todos held in memory | 
 
 
 
