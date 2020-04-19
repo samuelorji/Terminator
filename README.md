@@ -9,11 +9,11 @@ It's a CLI app that can respond to the some commands and perform some operations
 
 Run the project with 
 
-`sbt run` 
+*`sbt run`* 
 
 #### Commands List
 
-When the application is started, type in `commands` to see the full list of commands the app accepts as well as arguments,
+When the application is started, type in *`commands`* to see the full list of commands the app accepts as well as arguments,
 but here is a summary
 
 | commands  | args          | Description  |
@@ -24,7 +24,11 @@ but here is a summary
 | *weather*  | no args / [lat lon]  | Fetches weather details for geographic coordinates supplied or defaults to Copenhagen |
 | *todo*    | [add] / [rm] / [list] / [clear]|    opens the application specified or an app that contains that name | 
 
+
+
 **This application currently doesn't support the windows platform and has only been tested on Ubuntu and MAC OS X**
+
+
 
 >There is another version of this application that can be used to fetch personal information like Emails, Twitter Feeds, but I'm not comfortable 
 releasing such an app as it can be misused. So I just stuck with one that doesn't require any personal credentials
