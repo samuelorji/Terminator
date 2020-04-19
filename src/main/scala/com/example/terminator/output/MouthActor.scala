@@ -16,7 +16,6 @@ object MouthActor {
 
   def apply() : Behavior[MouthMessages] = Behaviors.receive{ (context, msg) =>
     msg match {
-
       case ShowDelayed =>
         println("Please wait ... ")
         Behaviors.same

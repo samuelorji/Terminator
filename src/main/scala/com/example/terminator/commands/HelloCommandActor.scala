@@ -8,6 +8,7 @@ import commands._
 
 
 object HelloCommandActor extends CommandWorker with CommandProcessAnalytics {
+  //(returns a random greeting for each of these)
   override def commandTitle: String = "hello"
 
   override def commands: List[String] = commandRegexes

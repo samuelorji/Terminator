@@ -14,7 +14,7 @@ object Input {
     //spawn brain , input and output
 
     val mouth = ctx.spawn(MouthActor(),"Mouth")
-    val brain = ctx.spawn(Brain(mouth,ctx.self),"Brain")
+    val brain = ctx.spawn(Brain.actor(mouth,ctx.self),"Brain")
 
     ctx.self ! UserInput(getInput)
 
@@ -23,7 +23,7 @@ object Input {
 
     Behaviors.receiveMessage[AppMessages]{
       case UserInput(input) =>
-        brain ! Brain.ProcessCommand(input.toLowerCase)
+        brain ! Brain.ProcessCommand(input.trim.toLowerCase)
         Behaviors.same
       case Next =>
         ctx.self ! UserInput(getInput)

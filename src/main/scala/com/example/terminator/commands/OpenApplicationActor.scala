@@ -14,6 +14,7 @@ object OpenApplicationActor extends CommandWorker with CommandProcessAnalytics {
     "open <app-name>"
   )
 
+  //(opens the application you specified, or an app that contains the name specified)
   override def commandTitle: String = "open"
 
 
@@ -61,6 +62,8 @@ object OpenApplicationActor extends CommandWorker with CommandProcessAnalytics {
                         }
                     }
                   }
+
+                  //recursively find the applications from all the paths supplied
                   findApp(paths)
                 }else{
                   val errorMsg = new String(error.take(errorRead))
@@ -69,7 +72,7 @@ object OpenApplicationActor extends CommandWorker with CommandProcessAnalytics {
                 }
               }
               else if(os.contains("mac")){
-                val exec = Runtime.getRuntime.exec(Array("/bin/bash", "-c", s"echo `ls -la /Applications | grep -i ${app}` | cut -d' ' -f9 -f10 -f11 -f12 -f13 -f14"))
+                val exec = Runtime.getRuntime.exec(Array("/bin/bash", "-c", s"echo `ls -la /Applications | grep -i ${app}` | cut -d' ' -f9 -f10 -f11 -f12 -f13 -f14")) //TODO find a better way regex maybe
                 val error = Array.ofDim[Byte](2*1024) //2MB
                 val success = Array.ofDim[Byte](1*1024) //256KB
 
@@ -80,7 +83,7 @@ object OpenApplicationActor extends CommandWorker with CommandProcessAnalytics {
                   //error occurred in shell
                   val errorMsg = new String(error.take(errorRead))
                   logger.error(s"error occurred while processing [$cmd], error : $errorMsg")
-                  worker ! BrainMinion.CommandNotHandled(s"Can't find ${app}")
+                  worker ! BrainMinion.CommandNotHandled(s"Can't open ${app}")
                 }else{
                   if(successRead > 1){
                     //we found app
@@ -94,11 +97,17 @@ object OpenApplicationActor extends CommandWorker with CommandProcessAnalytics {
                     }else{
                       worker ! BrainMinion.CommandHandled(s"$app opened ")
                     }
+                  }else {
+                    // app name not found
+                    worker ! BrainMinion.CommandNotHandled(s"Cannot find ${app}")
                   }
                 }
               }else{
                 worker ! BrainMinion.CommandNotHandled(s"Failure handling ${cmd}")
               }
+
+            case _ =>
+              worker ! BrainMinion.CommandNotHandled(s"Cannot understand $cmd")
           }
         }
         Behaviors.same

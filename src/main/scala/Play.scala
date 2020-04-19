@@ -3,7 +3,7 @@ import akka.actor.typed.scaladsl.Behaviors
 import akka.actor.typed.{ActorSystem, Behavior, PostStop, Terminated}
 import play.api.libs.json._
 
-object Play extends App {
+object Play  {
 
 
   val json = "{\"coord\":{\"lon\":12.57,\"lat\":55.68},\"weather\":[{\"id\":804,\"main\":\"Clouds\",\"description\":\"overcast clouds\",\"icon\":\"04n\"}],\"base\":\"stations\",\"main\":{\"temp\":279.96,\"feels_like\":274.16,\"temp_min\":279.15,\"temp_max\":281.15,\"pressure\":1017,\"humidity\":78},\"visibility\":10000,\"wind\":{\"speed\":6.2,\"deg\":270},\"clouds\":{\"all\":100},\"dt\":1586895281,\"sys\":{\"type\":1,\"id\":1575,\"country\":\"DK\",\"sunrise\":1586837182,\"sunset\":1586887981},\"timezone\":7200,\"id\":6949461,\"name\":\"Inner City\",\"cod\":200}"

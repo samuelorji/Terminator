@@ -20,6 +20,7 @@ object GoogleCommandActor extends CommandWorker with CommandProcessAnalytics {
   )
 
 
+  //(open search query in a new chrome window)
   override def commandTitle: String = "google"
 
   def apply(): Behavior[CommandsMessage] = Behaviors.setup{context =>
@@ -58,12 +59,16 @@ object GoogleCommandActor extends CommandWorker with CommandProcessAnalytics {
                   logger.error(s"Error starting process for command $cmd, error : ${err.getMessage}")
                   worker ! BrainMinion.CommandNotHandled("Can't process Google command")
                 case Right(process) =>
+
+                  println(process.isAlive)
                   val read = process.getErrorStream.read(errorMsg)
                   if (read < 0) {
                     //no error message
                     worker ! BrainMinion.CommandHandled("New Chrome Tab opened")
                   } else {
-                    worker ! BrainMinion.CommandNotHandled("Can't process Google command")
+                    val error = new String(errorMsg.take(read))
+                    logger.error(s"error occurred while processing [$cmd], error : $error")
+                    worker ! BrainMinion.CommandNotHandled("Can't process Google command, Chrome likely not installed")
                   }
               }
 

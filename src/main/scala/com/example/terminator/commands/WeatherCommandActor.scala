@@ -24,6 +24,7 @@ private [commands] trait  WeatherCommandActor extends CommandWorker with Command
     "^weather.*"
   )
 
+  //(fetches weather information for either Copenhagen or coordinates supplied)
   override def commandTitle: String = "weather"
 
   override def commands: List[String] = {

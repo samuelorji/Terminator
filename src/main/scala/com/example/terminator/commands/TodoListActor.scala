@@ -23,6 +23,7 @@ object TodoListActor extends CommandWorker with CommandProcessAnalytics {
 
   private [this] val todos = ArrayBuffer.empty[String]
 
+  //(creates an in memory todo list)
   override def commandTitle: String = "todo"
 
   private def formatSeq(elems : Seq[String]) : String = {

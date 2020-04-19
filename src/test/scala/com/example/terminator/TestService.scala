@@ -1,9 +1,11 @@
 package com.example.terminator
 
 import akka.actor.testkit.typed.scaladsl.ActorTestKit
+import akka.testkit.ImplicitSender
+import akka.testkit.TestKit._
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-import org.scalatest.{BeforeAndAfterAll}
+import org.scalatest.BeforeAndAfterAll
 
 trait TestService extends AnyWordSpec with BeforeAndAfterAll with Matchers {
   protected val testKit = ActorTestKit()

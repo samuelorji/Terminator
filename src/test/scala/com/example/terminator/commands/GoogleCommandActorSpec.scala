@@ -13,13 +13,15 @@ class GoogleCommandActorSpec extends TestService {
       workerProbe.expectMessage(BrainMinion.CommandNotHandled("no search query"))
       workerProbe.expectNoMessage(100 millis)
     }
-    "return command handled when supplied a search query" in {
-      val workerProbe = testKit.createTestProbe[BrainMinion.MinionMessage]("worker")
-      googleActor ! commands.HandleCommand("google random search", workerProbe.ref)
-      workerProbe.expectMessage(BrainMinion.CommandHandled("New Chrome Tab opened"))
-      workerProbe.expectNoMessage(100 millis)
+    //Uncomment to see actual google tab open :)
 
-    }
+//    "return command handled when supplied a search query" in {
+//      val workerProbe = testKit.createTestProbe[BrainMinion.MinionMessage]("worker")
+//      googleActor ! commands.HandleCommand("google random search", workerProbe.ref)
+//      workerProbe.expectMessage(BrainMinion.CommandHandled("New Chrome Tab opened"))
+//      workerProbe.expectNoMessage(100 millis)
+//
+//    }
     "return a 'cannot understand command' " in {
       val workerProbe = testKit.createTestProbe[BrainMinion.MinionMessage]("worker")
       val cmd = "goggxlxe helo there "
